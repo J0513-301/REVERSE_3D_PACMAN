@@ -7,6 +7,7 @@ public class PacmanAI : MonoBehaviour
     [Header("References")]
     public Transform player;
     public Camera playerCamera;
+    public float moveSpeed = 7f;
 
     private NavMeshAgent agent;
     private AudioSource audioSource;
@@ -20,6 +21,8 @@ public class PacmanAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
         pacmanCollider = GetComponent<Collider>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = PlayerPrefs.GetFloat("PacmanSpeed", 5f);
     }
 
     void Update()
