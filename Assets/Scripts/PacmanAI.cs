@@ -41,6 +41,7 @@ public class PacmanAI : MonoBehaviour
             Vector3.Distance(transform.position, player.position) < 1f)
         {
             audioSource.Play();
+            GameManager.Instance.PlayerDied();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

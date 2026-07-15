@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text scoreText;
+    public TMP_Text deathText;
 
     [Header("Scene Objects")]
     public Transform coinManager;
     public Transform exitWall;
 
     private int score = 0;
+    private int deaths;
     private int totalCoins;
     private AudioSource coinAudio;
 
@@ -21,12 +23,25 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    void UpdateDeaths()
+    {
+        deathText.text = "Deaths: " + deaths;
+    }
+
     void Start()
     {
         coinAudio = GetComponent<AudioSource>();
 
         totalCoins = coinManager.childCount;
+
+        score = 0;
+
+        deaths = PlayerPrefs.GetInt("Deaths", 0);
+
         UpdateScore();
+        UpdateDeaths();
+
+        Debug.Log("Deaths in PlayerPrefs = " + PlayerPrefs.GetInt("Deaths", -1));
     }
 
     public void CollectCoin()
@@ -42,6 +57,16 @@ public class GameManager : MonoBehaviour
         {
             WinGame();
         }
+    }
+
+    public void PlayerDied()
+    {
+        deaths++;
+
+        PlayerPrefs.SetInt("Deaths", deaths);
+        PlayerPrefs.Save();
+
+        UpdateDeaths();
     }
 
     void UpdateScore()
